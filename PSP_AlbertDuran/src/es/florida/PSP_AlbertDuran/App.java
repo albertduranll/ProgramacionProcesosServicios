@@ -8,7 +8,7 @@ public class App {
 	public static void main(String[] args) {
 		
 //		sayHello();
-//		imprimirArrayAlumnos();
+		imprimirArrayAlumnos();
 		imprimirListaAlumnos();
 	}
 	
@@ -17,6 +17,8 @@ public class App {
 	}
 	
 	public static void imprimirArrayAlumnos() {
+		
+		System.out.println("Ejercicio 2.a");
 		
 		String[] arrayAlumnos = {
 		"Albert",
@@ -33,6 +35,8 @@ public class App {
 	}
 	
 	public static void imprimirListaAlumnos() {
+		
+		System.out.println("Ejercicio 2.b");
 		
 		 List<String> listAlumnos = new ArrayList<String>(); 
 		 
