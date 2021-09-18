@@ -1,11 +1,14 @@
 package es.florida.PSP_AlbertDuran;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class App {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 //		sayHello();
 //		imprimirArrayAlumnos();
@@ -14,7 +17,8 @@ public class App {
 //		System.out.print(calculoFactorial(15));
 //		int[] intArray = {10, 15, 8, 13};	
 //		System.out.print(compruebaNumeroMayor(intArray));
-		System.out.print(sumaCincoNumeros(1,2,3,4,5));
+//		System.out.print(sumaCincoNumeros(1,2,3,4,5));
+		mostrarNivelSalarial();
 	}
 	
 	public static void sayHello() {
@@ -100,5 +104,30 @@ public class App {
 		}
 		
 		return suma;
+	}
+	
+public static void mostrarNivelSalarial() throws IOException {
+		
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		
+		System.out.print("Introduce el nombre del trabajador: ");
+		String nombre = br.readLine();
+		System.out.print("Introduce los años de experiencia: ");
+		int anosExp = Integer.parseInt(br.readLine());
+		
+		if(anosExp < 1)
+			System.out.print(nombre + ": Desarrollador Junior L1 – 15000-18000”");
+		else if(anosExp >= 1 && anosExp <= 2)
+			System.out.print(nombre + ": Desarrollador Junior L2 – 18000-22000");
+		else if(anosExp >= 3 && anosExp < 5)
+			System.out.print(nombre + ": Desarrollador Senior L1 – 22000-28000");
+		else if(anosExp >= 5 && anosExp <= 8)
+			System.out.print(nombre + ": Desarrollador Senior L2 – 28000-36000");
+		else if(anosExp > 8)
+			System.out.print(nombre + ": Analista / Arquitecto. Salario a convenir en base a rol");		
+		
+		isr.close();
+		br.close();
 	}
 }
