@@ -12,8 +12,9 @@ public class App {
 //		imprimirListaAlumnos();
 //		System.out.print(sumaNumerosPares(10));
 //		System.out.print(calculoFactorial(15));
-		int[] intArray = {10, 15, 8, 13};	
-		System.out.print(compruebaNumeroMayor(intArray));
+//		int[] intArray = {10, 15, 8, 13};	
+//		System.out.print(compruebaNumeroMayor(intArray));
+		System.out.print(sumaCincoNumeros(1,2,3,4,5));
 	}
 	
 	public static void sayHello() {
@@ -86,5 +87,18 @@ public class App {
 			}
 		}
 		return numMayor;
+	}
+	
+	public static int sumaCincoNumeros(int num1, int num2, int num3, int num4, int num5)
+	{
+		int suma = 0;
+		int[] numArray = { num1, num2, num3, num4, num5 };
+		
+		for(int i = 5; i > 0; i--) {
+			System.out.println(numArray[i-1]);
+			suma += numArray[i-1];
+		}
+		
+		return suma;
 	}
 }
