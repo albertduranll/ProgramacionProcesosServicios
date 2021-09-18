@@ -8,8 +8,9 @@ public class App {
 	public static void main(String[] args) {
 		
 //		sayHello();
-		imprimirArrayAlumnos();
-		imprimirListaAlumnos();
+//		imprimirArrayAlumnos();
+//		imprimirListaAlumnos();
+		System.out.print(sumaNumerosPares(10));
 	}
 	
 	public static void sayHello() {
@@ -49,5 +50,17 @@ public class App {
 		 
 		 for(String alumno:listAlumnos)  
 			  System.out.println(alumno);  
+	}
+	
+	public static int sumaNumerosPares(int limitNum) {
+		
+		int suma = 0;
+		
+		for(int i = 0; i < limitNum; i++) {
+			if (i%2==0)
+			    suma += i;
+		}
+		
+		return suma;
 	}
 }
