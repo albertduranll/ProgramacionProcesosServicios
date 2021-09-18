@@ -18,7 +18,8 @@ public class App {
 //		int[] intArray = {10, 15, 8, 13};	
 //		System.out.print(compruebaNumeroMayor(intArray));
 //		System.out.print(sumaCincoNumeros(1,2,3,4,5));
-		mostrarNivelSalarial();
+//		mostrarNivelSalarial();
+		numerosIntervalo();
 	}
 	
 	public static void sayHello() {
@@ -130,4 +131,58 @@ public static void mostrarNivelSalarial() throws IOException {
 		isr.close();
 		br.close();
 	}
+
+	public static void numerosIntervalo() throws IOException {
+		
+		long startTime = System.nanoTime();
+		
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		
+		System.out.print("Introduce el mínimo: ");
+		int min = Integer.parseInt(br.readLine());
+		System.out.print("Introduce el máximo: ");
+		int max = Integer.parseInt(br.readLine());
+		
+		int dif = max-min;
+		
+		while(max <= min || dif <= 1)
+		{
+			System.out.print("El máximo debe ser superior al mínimo. Vuelve a introducir el máximo: ");
+			max = Integer.parseInt(br.readLine());
+			dif = max-min;
+		}
+		
+		for(int i = min +1; i < max; i++)
+		{
+			if(esPrimo(i))
+				System.out.println(i + " (es un número primo)");
+			else
+				System.out.println(i + " (no es un número primo)");
+		}	
+		
+		isr.close();
+		br.close();
+		
+		long tiempoEstimado = System.nanoTime() - startTime;
+		System.out.println("Tiempo de ejecución del método: " + tiempoEstimado);
+	}
+	
+	public static boolean esPrimo(int numero) {
+		 
+	    if (numero <= 1) {
+	        return false;
+	    }
+	
+	    int contador = 0;
+	
+	    for (int i = (int) Math.sqrt(numero); i > 1; i--) {
+	        if (numero % i == 0) {
+	            contador++;
+	        }
+	    }
+	
+	    return contador < 1;
+		}
 }
+
