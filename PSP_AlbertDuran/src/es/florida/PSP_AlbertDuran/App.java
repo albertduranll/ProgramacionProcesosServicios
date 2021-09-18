@@ -11,7 +11,9 @@ public class App {
 //		imprimirArrayAlumnos();
 //		imprimirListaAlumnos();
 //		System.out.print(sumaNumerosPares(10));
-		System.out.print(calculoFactorial(15));
+//		System.out.print(calculoFactorial(15));
+		int[] intArray = {10, 15, 8, 13};	
+		System.out.print(compruebaNumeroMayor(intArray));
 	}
 	
 	public static void sayHello() {
@@ -70,5 +72,19 @@ public class App {
 			 return 1;
 		 else
 			 return num * calculoFactorial(num-1);
+	}
+	
+	public static int compruebaNumeroMayor(int[] array)
+	{
+		int numMayor = 0;
+		
+		for(int i = 0; i < array.length; i++)
+		{
+			if(array[i] > numMayor)
+			{
+				numMayor = array[i];
+			}
+		}
+		return numMayor;
 	}
 }
