@@ -10,7 +10,8 @@ public class App {
 //		sayHello();
 //		imprimirArrayAlumnos();
 //		imprimirListaAlumnos();
-		System.out.print(sumaNumerosPares(10));
+//		System.out.print(sumaNumerosPares(10));
+		System.out.print(calculoFactorial(15));
 	}
 	
 	public static void sayHello() {
@@ -62,5 +63,12 @@ public class App {
 		}
 		
 		return suma;
+	}
+	
+	public static float calculoFactorial(float num) {
+		 if (num==0)
+			 return 1;
+		 else
+			 return num * calculoFactorial(num-1);
 	}
 }
