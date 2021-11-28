@@ -1,9 +1,11 @@
 package es.florida.AE3_T3_Multihilo;
 
-public class Minero {
+public class Minero{
 
-	int bolsa; //Donde guarda los recursos que recolecta.
-	int tiempoExtraccion = 1000; //Tiempo de trabajo necesario para extraer un recurso.
+	int bolsa = 0; //Donde guarda los recursos que recolecta.
+	int tiempoExtraccion; //Tiempo de trabajo necesario para extraer un recurso.
+	
+	static int totalRecursosRecogidos = 0;
 
 	Minero(int bolsa, int tiempoExtraccion){
 		this.bolsa = bolsa;
@@ -14,25 +16,22 @@ public class Minero {
 		bolsa = 0;
 	}
 	
-	synchronized public void extraerRecurso(Mina mina, int totalExtraido) {			
-		try {
-			if(mina.stock > 0) {
-				
-				bolsa ++;
-				
-				mina.stock -= bolsa;		
-			}
-			else {
-				System.err.println("Recursos agotados en esta mina. TOTAL RECOLECTADO => " + bolsa);
-				
-				totalExtraido += bolsa;
-			}
+	synchronized public void extraerRecurso(Mina mina) {		
 			
-//			System.out.println(Thread.currentThread().getName() + " extrayendo recursos...");
+		try {			
+			while(totalRecursosRecogidos < 1000) {
+				if(mina.stock > 0) {	
+						bolsa = bolsa + 10;
+						mina.stock = mina.stock - 10;
+						totalRecursosRecogidos += 10;
+	//					System.out.println(Thread.currentThread().getName() + " => +1 recurso! (" + bolsa + ")");
+						System.err.println("STOCK DE MINA => " + mina.stock);
+						Thread.sleep(1000);
+				}
+			}
+			System.err.println(Thread.currentThread().getName() + ": Recursos agotados en esta mina. Bolsa => " + bolsa);			
 			
-			Thread.sleep(tiempoExtraccion);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
