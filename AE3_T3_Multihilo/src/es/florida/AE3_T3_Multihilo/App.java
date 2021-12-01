@@ -49,7 +49,7 @@ public class App{
 		 
 		 //Damos un tiempo para asegurar que terminan toso los procesos.
 		try {
-			Thread.sleep(9000);
+			Thread.sleep(8000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

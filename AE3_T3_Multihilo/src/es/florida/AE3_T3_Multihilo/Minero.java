@@ -20,14 +20,15 @@ public class Minero{
 			
 		try {			
 			while(totalRecursosRecogidos < 1000) {
-				if(mina.stock > 0) {	
+//				if(mina.stock > 0) {	
 						bolsa += 10;
 						totalRecursosRecogidos += 10;
 						mina.stock = mina.stock - 10;
 						System.out.println(Thread.currentThread().getName() + " => +1 recurso! (" + bolsa + ")");
 //						System.err.println("STOCK DE MINA => " + mina.stock);
+						
 						Thread.sleep(1000);
-				}
+//				}
 			}
 			System.err.println(Thread.currentThread().getName() + ": Recursos agotados en esta mina. Bolsa => " + bolsa);			
 			
