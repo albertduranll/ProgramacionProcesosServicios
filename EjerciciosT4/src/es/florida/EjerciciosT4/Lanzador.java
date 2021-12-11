@@ -16,7 +16,7 @@ public class Lanzador {
 		ServerSocket socketEscucha = null;
 		
 		try {
-			socketEscucha = new ServerSocket(1234);
+			socketEscucha = new ServerSocket(9876);
 		} catch (IOException e) {
 			System.err.println("SERVIDOR >>> Error");
 			return;
@@ -33,7 +33,6 @@ public class Lanzador {
 			String num1 = bf.readLine();
 			String num2 = bf.readLine();
 			System.err.println("SERVIDOR >>> Realiza la operacion");
-//			System.out.println(linea + " | " + num1 + " | " + num2);
 			Integer result = ServidorCalculo.calcular(linea, num1, num2);
 			System.err.println("SERVIDOR >>> Devuelve resultado");
 			OutputStream os = conexion.getOutputStream();
