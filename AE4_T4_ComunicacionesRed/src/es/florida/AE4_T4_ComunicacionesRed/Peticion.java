@@ -77,17 +77,25 @@ public class Peticion implements Runnable {
 	public void run() {
 		try{
 			ObjectOutputStream outObjeto= new ObjectOutputStream(socket.getOutputStream());
-			Password p= new Password("","");
+			Password p= new Password();
 			outObjeto.writeObject(p);
 			System.err.println("SERVIDOR >> Enviando objeto a cliente");
 			ObjectInputStream inObjeto= new ObjectInputStream(socket.getInputStream());
 			Password pMod= (Password) inObjeto.readObject();
 			System.err.println("SERVIDOR >> Recibiendo objeto del cliente");
 			
-			System.err.println("SERVIDOR >> Encriptando contraseña...");
-			String encryptedPassword = passwordEncriptada(pMod);
-			String encryptedPassword2 = getMD5EncryptedValue(pMod);
-			pMod.setEncryptedPassword(encryptedPassword2);
+			System.err.print("SERVIDOR >> Encriptando contraseña");
+			String tipoEncriptado = pMod.getTipoEncriptado();
+			String encryptedPassword ="";
+			if(tipoEncriptado.equals("a")) {
+				System.err.print(" (encriptado básico)...\n");				
+				encryptedPassword = passwordEncriptada(pMod);
+			}
+			else if(tipoEncriptado.equals("b")) {
+				System.err.print(" (encriptado MD5)...\n");					
+				encryptedPassword = getMD5EncryptedValue(pMod);
+			}
+			pMod.setEncryptedPassword(encryptedPassword);
 			
 			System.out.println("Password = " + pMod.getPassword());
 			System.out.println("EncryptedPassword = " + pMod.getEncryptedPassword());

@@ -7,14 +7,24 @@ public class Password implements Serializable {
 	
 	String password;
 	String encryptedPassword;
+	String tipoEncriptado;
 		
 	public Password() {
 		super();
 	}
 	
-	public Password(String password, String encryptedPassword) {
+	public Password(String password, String encryptedPassword, String tipoEncriptado) {
 		this.password = password;
 		this.encryptedPassword = encryptedPassword;
+		this.tipoEncriptado = tipoEncriptado;
+	}
+
+	public String getTipoEncriptado() {
+		return tipoEncriptado;
+	}
+
+	public void setTipoEncriptado(String tipoEncriptado) {
+		this.tipoEncriptado = tipoEncriptado;
 	}
 
 	public String getPassword() {
