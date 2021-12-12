@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Peticion implements Runnable {
 	BufferedReader bfr;
@@ -41,6 +43,35 @@ public class Peticion implements Runnable {
 		
 		return resultado;
 	}
+	
+	/**
+	 * Método que devuelve la contraseña encryptada mediante algoritmo MD5.
+	 * @param pass
+	 * @return
+	 */
+	public static String getMD5EncryptedValue(Password pass) {
+        final byte[] defaultBytes = pass.password.getBytes();
+        String result = "";
+        try {
+            final MessageDigest md5MsgDigest = MessageDigest.getInstance("MD5");
+            md5MsgDigest.reset();
+            md5MsgDigest.update(defaultBytes);
+            final byte messageDigest[] = md5MsgDigest.digest();
+
+            final StringBuffer hexString = new StringBuffer();
+            for (final byte element : messageDigest) {
+                final String hex = Integer.toHexString(0xFF & element);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            result = hexString + "";
+        } catch (final NoSuchAlgorithmException nsae) {
+            nsae.printStackTrace();
+        }
+        return result;
+    }
 
 	
 	public void run() {
@@ -55,7 +86,8 @@ public class Peticion implements Runnable {
 			
 			System.err.println("SERVIDOR >> Encriptando contraseña...");
 			String encryptedPassword = passwordEncriptada(pMod);
-			pMod.setEncryptedPassword(encryptedPassword);
+			String encryptedPassword2 = getMD5EncryptedValue(pMod);
+			pMod.setEncryptedPassword(encryptedPassword2);
 			
 			System.out.println("Password = " + pMod.getPassword());
 			System.out.println("EncryptedPassword = " + pMod.getEncryptedPassword());
