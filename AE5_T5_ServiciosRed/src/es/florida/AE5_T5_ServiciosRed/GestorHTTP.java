@@ -1,8 +1,6 @@
 package es.florida.AE5_T5_ServiciosRed;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -150,7 +148,7 @@ public class GestorHTTP implements HttpHandler{
 				String email_remitente_pass = requestParamValue.split(":")[1].split("=", 2)[1].split(";")[1].split("=")[1];
 				String host = "smtp.gmail.com";
 				String port = "587";
-				String[] email_destino =  {"mantenimientoinvernalia@gmail.com", "megustaelfresquito@gmail.com"};
+				String email_destino =  "mantenimientoinvernalia@gmail.com;megustaelfresquito@gmail.com";
 				String[] anexo =  {"res/idea.jpeg","res/calendario.pdf"};
 				
 				//Realizamos el envío pasando los datos como parametros.

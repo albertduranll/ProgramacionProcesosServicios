@@ -11,12 +11,15 @@ public class Servidor {
 
 	public static void main(String[] args) throws IOException {
 		
+		
+		//Gestionamos la conexión del servidor
 		String host = "localhost";
 		int puerto = 7777;
 		InetSocketAddress direccionTCPIP = new InetSocketAddress(host,puerto);
 		int backlog = 0;
 		HttpServer servidor = HttpServer.create(direccionTCPIP, backlog);
 		
+		//Referenciamos a nuestro gestor HTTP para antender peticiones.
 		GestorHTTP gestorHTTP = new GestorHTTP();
 		String rutaRespuesta = "/estufa";
 		servidor.createContext(rutaRespuesta, gestorHTTP);

@@ -17,34 +17,22 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 public class MailSender {
-
-//	public static void main(String[] args) throws UnsupportedEncodingException, MessagingException {
-//		// TODO Auto-generated method stub
-//		
-//		String mensaje = "Hola jeje, te quiero mucho. Voy a hacer la comida, vale?";
-//		String asunto = "IMPORTANTE MENSAJE PARA LADY LAURA";
-//		String email_remitente = "albertfloridadam@gmail.com";
-//		String email_remitente_pass = "lagar1992";
-//		String host = "smtp.gmail.com";
-//		String port = "587";
-//		String[] email_destino =  {"albertduranll@gmail.com", "laulozun@gmail.com"};
-//		String[] anexo =  {"C:\\idea.jpeg", "C:\\jeje.jpeg"};
-//		
-//		envioMail(
-//				mensaje,
-//				asunto,
-//				email_remitente,
-//				email_remitente_pass,
-//				host,
-//				port,
-//				email_destino,
-//				anexo
-//				);
-//
-//	}
 	
+	/**
+	 * Método para enviar email a partir de los datos que facilitamos por parámetros.
+	 * @param mensaje
+	 * @param asunto
+	 * @param email_remitente
+	 * @param email_remitente_pass
+	 * @param host_email
+	 * @param port_email
+	 * @param email_destino
+	 * @param anexo
+	 * @throws UnsupportedEncodingException
+	 * @throws MessagingException
+	 */
 	public static void envioMail(String mensaje, String asunto, String email_remitente, String email_remitente_pass, 
-	String host_email, String port_email, String[] email_destino, String[] anexo) throws 
+	String host_email, String port_email, String email_destino, String[] anexo) throws 
 	UnsupportedEncodingException, MessagingException{
 		
 		Properties props = System.getProperties();
@@ -59,27 +47,15 @@ public class MailSender {
 		
 		MimeMessage message = new MimeMessage(session);
 		message.setFrom(new InternetAddress(email_remitente));
-//		message.addRecipients(Message.RecipientType.TO, email_destino[0]);
-		addRecipients(message, Message.RecipientType.TO, "albertduranll@gmail.com");
+		addRecipients(message, Message.RecipientType.TO, email_destino);
 		message.setSubject(asunto);
 		
 		BodyPart messageBodyPart1 = new MimeBodyPart();
 		messageBodyPart1.setText(mensaje);
 		
-		//Con exto adjuntariamos un elemento.
-//		BodyPart messageBodyPart2 = new MimeBodyPart();
-//		DataSource src = new FileDataSource(anexo[0]);
-//		messageBodyPart2.setDataHandler(new DataHandler(src));
-//		messageBodyPart2.setFileName(anexo[0]);
-	
-		
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(messageBodyPart1);
-//		multipart.addBodyPart(messageBodyPart2);
 		addAttachedElements(multipart, anexo); //Con este metodo adjuntamos 1 o más elementos.
-		
-		
-
 		
 		message.setContent(multipart);
 		
@@ -89,8 +65,15 @@ public class MailSender {
 		transport.close();
 		
 		System.out.println("Message sent!");
-;	}
+	}
 	
+	/**
+	 * Método para gestionar uno o más destinatarios del correo.
+	 * @param message
+	 * @param type
+	 * @param recipients
+	 * @throws MessagingException
+	 */
 	private static void addRecipients(MimeMessage message, RecipientType type, String recipients) throws MessagingException {
 	  String[] addresses = recipients.split(";");
 	  for (int i = 0; i < addresses.length; i++) {
@@ -98,6 +81,12 @@ public class MailSender {
 	  }
 	}
 	
+	/**
+	 * Método para poder adjuntar uno o más archivos al correo.
+	 * @param multipart
+	 * @param anexo
+	 * @throws MessagingException
+	 */
 	private static void addAttachedElements(Multipart multipart, String[] anexo) throws MessagingException {
 		
 		if (anexo != null && anexo.length > 0) {
