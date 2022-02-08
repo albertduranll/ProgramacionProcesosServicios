@@ -1,10 +1,14 @@
 package es.florida.AE5_T5_ServiciosRed;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+
+import javax.mail.MessagingException;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -41,7 +45,12 @@ public class GestorHTTP implements HttpHandler{
 			//Obtenemos el parametro que nos llega desde la petición POST.
 			requestParamValue = handlePostRequest(httpExchange);
 			//Gestionamos la respuesta de la petición POST en base a al parámetro indicado.
-			handlePOSTResponse(httpExchange,requestParamValue);
+			try {
+				handlePOSTResponse(httpExchange,requestParamValue);
+			} catch (IOException | MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -112,8 +121,9 @@ public class GestorHTTP implements HttpHandler{
 	 * @param httpExchange
 	 * @param requestParamValue
 	 * @throws IOException
+	 * @throws MessagingException 
 	 */
-	private void handlePOSTResponse(HttpExchange httpExchange, String requestParamValue) throws IOException {
+	private void handlePOSTResponse(HttpExchange httpExchange, String requestParamValue) throws IOException, MessagingException {
 		
 		OutputStream outputStream = httpExchange.getResponseBody();
 		String htmlResponse= "Parametro/s POST: " + requestParamValue + " -> Se procesara por parte del servidor";
@@ -124,8 +134,34 @@ public class GestorHTTP implements HttpHandler{
 		System.out.println("Devuelve respuesta HTML: " + htmlResponse);
 		
 		try {
-			temperaturaTermostato = Integer.parseInt(requestParamValue.split("=")[1]);
-			regularTemperatura(temperaturaTermostato);
+			//Comprobamos lo que nos llega por la petición POST y hacemos la gestión adecuada de dichos datos.
+			
+			if("setTemperatura".equals(requestParamValue.split("=")[0])) {
+				//Regulamos la temperatura
+				temperaturaTermostato = Integer.parseInt(requestParamValue.split("=")[1]);
+				regularTemperatura(temperaturaTermostato);
+			}	
+			else if("notificarAveria".equals(requestParamValue.split(":")[0])) {
+				//Notificamos la averia mediante envío de email.
+				
+				String mensaje = "Actividad evaluable 5 de Programación de Servicios y Procesos completada por Albert Duran Lligonya.";
+				String asunto = "AVERIA";
+				String email_remitente = requestParamValue.split(":")[1].split("=")[1].split(";")[0];
+				String email_remitente_pass = requestParamValue.split(":")[1].split("=", 2)[1].split(";")[1].split("=")[1];
+				String host = "smtp.gmail.com";
+				String port = "587";
+				String[] email_destino =  {"mantenimientoinvernalia@gmail.com", "megustaelfresquito@gmail.com"};
+				String[] anexo =  {"res/idea.jpeg","res/calendario.pdf"};
+				
+				//Realizamos el envío pasando los datos como parametros.
+				MailSender.envioMail(mensaje, asunto, email_remitente, email_remitente_pass, host, port, email_destino, anexo);
+				
+				System.out.println("Correo con asunto " + asunto + " enviado correctamente.");
+			}
+			else {
+				System.out.println("No se reconoce los datos recibidos mediante POST");
+			}
+			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
